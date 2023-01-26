@@ -1,0 +1,119 @@
+var search_codes = [
+{
+	"domainName":"www.china-embassy.org,us.chineseembassy.org,us.china-embassy.org",
+	"codeCn":"17e50b7a019",
+	"codeEn":"17e50b79ea1",
+	"siteIdCn":"186",
+	"siteIdEn":"187",
+	"siteName":"驻美国大使馆"
+},
+{
+	"domainName":"www.chinese-embassy.org.uk,uk.chineseembassy.org,uk.china-embassy.org",
+	"codeCn":"17e50b818f5",
+	"codeEn":"17e50b819c2",
+	"siteIdCn":"175",
+	"siteIdEn":"176",
+	"siteName":"驻英国大使馆"
+},
+{
+	"domainName":"www.amb-chine.fr,fr.chineseembassy.org,fr.china-embassy.org",
+	"codeCn":"17e50b79de9",
+	"codeEn":"17e50b75bc3",
+	"siteIdCn":"307",
+	"siteIdEn":"308",
+	"siteName":"驻法国大使馆"
+}
+,
+{
+	"domainName":"www.china-embassy.or.jp,jp.chineseembassy.org,jp.china-embassy.org",
+	"codeCn":"17e50b74ffa",
+	"codeEn":"17e50b75592",
+	"siteIdCn":"206",
+	"siteIdEn":"207",
+	"siteName":"驻日本大使馆"
+},
+{
+	"domainName":"www.china-embassy.or.jp,jp.chineseembassy.org,jp.china-embassy.org",
+	"codeCn":"17e50b797da",
+	"codeEn":"17e50b81a7e",
+	"siteIdCn":"177",
+	"siteIdEn":"178",
+	"siteName":"常驻联合国代表团"
+}
+]
+var fileLists = ["eng","fra","ara","esp","det","rus","jpn","por","bjly","ba","pol","net","kor","rom","tur","hu","mn","indo","th","ita","slo","mon","srp","kisw","vn","sy","hrt","gr"];
+/*获取地址栏中斜杠后第一个目录*/
+function getLasturl(value){
+ if(value!==null || value !==''){
+   var str = value.split("http://");
+   if(str.length==1)str=value.split("https://");
+   var index = str[1].split("/");
+   if(index.length>1)
+   	return index[1];
+   else
+   	return null;
+ }
+ return null;
+}
+function search_check(){
+	var swObj = document.getElementById("sw");
+	if(swObj==null)
+		swObj = document.getElementById("keys");
+	var swStr = swObj.value;
+	
+	if(swStr=="" || swStr=="请输入关键字" || swStr=="Please enter keywords")
+	{
+		alert("请输入关键字!\nPlease enter keywords.");
+		return false;
+	}
+	document.getElementById("searchWord").value = swStr;
+	return true;
+}
+/*检索地址*/
+var searchUrl="https://www.fmprc.gov.cn/irs-c-web/search.shtml";
+window.onload = function(){
+	var locationUrl = document.location.href;/*获取地址*/
+	//var locationUrl = "http://www.china-embassy.org/eng/";
+	var firstFileName = getLasturl(locationUrl);
+	//var domainName = "www.china-embassy.org";
+	var domainName = document.domain;
+	
+	var swObj = document.getElementById("sw");
+	if(swObj==null)
+		swObj = document.getElementById("keys");
+	var swStr = swObj.value;
+	var codeStr = "";
+	for(var i in search_codes)
+	{
+		if(search_codes[i].domainName.indexOf(domainName)>-1)
+		{
+			var otherUrl=false;
+			for(var j in fileLists)
+			{	
+				if(fileLists[j]==firstFileName){otherUrl=true}
+			}
+			if(otherUrl){searchUrl="https://www.fmprc.gov.cn/irs-c-web/search2.shtml";codeStr=search_codes[i].codeEn;}
+			else {searchUrl="https://www.fmprc.gov.cn/irs-c-web/search.shtml";codeStr=search_codes[i].codeCn;}
+		}
+	}
+	/*获取form*/
+	var formObj = document.getElementsByTagName("form");
+	formObj.item(0).setAttribute("action",searchUrl);
+	formObj.item(0).setAttribute("method","get");
+	var inputH1 = document.createElement("input");
+	inputH1.setAttribute("name","searchWord");
+	inputH1.setAttribute("id","searchWord");
+	inputH1.setAttribute("type","hidden");
+	inputH1.setAttribute("value","");
+	
+	var inputH2 = document.createElement("input");
+	inputH2.setAttribute("name","code");
+	inputH2.setAttribute("type","hidden");
+	inputH2.setAttribute("value",codeStr);
+	
+	formObj.item(0).appendChild(inputH1);
+	formObj.item(0).appendChild(inputH2);
+	
+	
+	//alert(formObj.item(0).getAttribute("action"));
+}

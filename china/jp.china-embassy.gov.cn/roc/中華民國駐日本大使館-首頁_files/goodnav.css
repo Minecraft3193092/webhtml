@@ -1,0 +1,12 @@
+﻿img { vertical-align: top; border: 0; }
+#hotpic { width: 317px; height: 226px;  margin: 0 auto; }
+#NewsPic { position: relative; width: 317px; height: 226px;}
+    #NewsPic a { overflow: visible; border: 0; text-decoration: none; }
+    #NewsPic .Picture { position: absolute; left: 0; top: 0; }
+    #NewsPic .Nav { position: absolute; height: 9px;line-height:9px;z-index:999;bottom:4px; right: 0px; }
+        #NewsPic .Nav span { font-size: 0px; font-weight: 400; color: #FFF; float: right; display: block; width: 9px; text-align: center; background: #366998; margin:0px 3px; cursor: pointer; }
+            #NewsPic .Nav span.Normal { color: #FFF; background: #999999; }
+            #NewsPic .Nav span.Cur { background: red; color: #FFF; }
+.NewsPicTxt {position:absolute;top:-44px;z-index:999; width: 622px;line-height:36px; height: 36px;overflow:hidden;font-family:'微软雅黑'; font-weight: 700; color: #fff; font-size: 16px; display:none;}
+.NewsPicTxt a:link, .NewsPicTxt a:visited { font-family: "Microsoft Yahei"; font-size: 16px; font-weight: 700; color: #0066cc; text-decoration: none; }
+.NewsPicTxt a:hover { color: none; }
